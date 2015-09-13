@@ -64,12 +64,27 @@ describe 'the person view', type: :feature do
         expect(page).to_not have_content('555-1234')
       end
 
+
+      it "show the email addresses" do
+        person.email_addresses.each do |email|
+          expect(page).to have_selector("li", text: "#{email.address}")
+        end
+      end
+
       it 'has a link for each email address' do
         expect(page).to have_selector('li', text: 'josh@example.com')
       end
 
       it 'it has an email address link' do
         expect(page).to have_link('Add email address', href: new_email_address_path(person_id: person.id))
+      end
+
+      it 'adds a new email address' do
+        page.click_link('Add email address')
+        page.fill_in("Address", with: 'test@example.com')
+        page.click_button('Create Email address')
+        expect(current_path).to eq(person_path(person))
+        expect(page).to have_content('test@example.com')
       end
 
     end #email addresses

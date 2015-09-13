@@ -87,7 +87,6 @@ RSpec.describe PhoneNumbersController, type: :controller do
 
 
       it "redirects to the phone number's person" do
-        valid_attributes = {number: '555-8888', person_id: alice.id}
         post :create, {:phone_number => valid_attributes}, valid_session
         expect(response).to redirect_to(alice)
       end
