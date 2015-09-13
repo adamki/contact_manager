@@ -4,7 +4,6 @@
   <strong>First name:</strong>
   <%= @person.first_name %>
 </p>
-
 <p>
   <strong>Last name:</strong>
   <%= @person.last_name %>
@@ -20,7 +19,6 @@
 </ul>
 
 <ul class = "show-email">
-
   <% @person.email_addresses.each do |email_address| %>
   <li>
     <%= email_address.address %><%= link_to('edit', edit_email_address_path(email_address))%>
@@ -28,6 +26,7 @@
   </li>
   <% end %>
 </ul>
+
 <%= link_to 'Add phone number', new_phone_number_path(person_id: @person.id) %> |
 <%= link_to 'Add email address', new_email_address_path(person_id: @person.id) %> |
 <%= link_to 'Edit', edit_person_path(@person) %> |
