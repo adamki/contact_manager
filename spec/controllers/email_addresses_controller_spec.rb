@@ -24,11 +24,11 @@ RSpec.describe EmailAddressesController, type: :controller do
   # EmailAddress. As you add validations to EmailAddress, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    {address: 'josh@example.com', person_id: 1}
+    { address: 'josh@example.com', contact_id: 1, contact_type: "Person" }
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    { address: nil, contact_id: nil, contact_type: nil}
   }
 
   # This should return the minimal set of values that should be in the session
@@ -71,7 +71,7 @@ RSpec.describe EmailAddressesController, type: :controller do
     context "with valid params" do
 
       let(:alice)  { Person.create(first_name: 'Alice', last_name: 'Smith')}
-      let(:valid_attributes) {{address: 'test@me.com', person_id: alice.id}}
+      let(:valid_attributes) {{address: 'test@me.com', contact_id: alice.id, contact_type: "Person"}}
 
       it "creates a new EmailAddress" do
         expect {
@@ -85,7 +85,7 @@ RSpec.describe EmailAddressesController, type: :controller do
         expect(assigns(:email_address)).to be_persisted
       end
 
-      it "redirects to the email addresses person" do
+      it "redirects to the email addresses contact" do
         post :create, {:email_address => valid_attributes}, valid_session
         expect(response).to redirect_to(alice)
       end
@@ -125,7 +125,7 @@ RSpec.describe EmailAddressesController, type: :controller do
 
       it "redirects to the email_address" do
         bob = Person.create(first_name: 'Bob', last_name: 'Jones')
-        valid_attributes ={address: 'test@me.com', person_id: bob.id}
+        valid_attributes ={address: 'test@me.com', contact_id: bob.id, contact_type: "Person"}
         email_address = EmailAddress.create! valid_attributes
         put :update, {:id => email_address.to_param, :email_address => valid_attributes}, valid_session
         expect(response).to redirect_to(bob)
